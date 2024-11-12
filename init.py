@@ -23,7 +23,7 @@ async def run_process(cmd):
 
 #register an account at ngrok.com and create an authtoken and place it here
 await asyncio.gather(
-    run_process(['ngrok', 'config', 'add-authtoken', os.environ.get('NGROK_AUTH_TOKEN', 'token')])
+    run_process(['ngrok', 'config', 'add-authtoken', 'place your token here'])
 )
 
 await asyncio.gather(

@@ -8,33 +8,42 @@ Ollama allows to run LLMs locally. But to run LLMs effectively, strong hardware 
 ## Steps 
 Create a new colab project. Default runtime type is CPU, change it to T4 GPU. 
 
-Upload the required files to colab project. 
-
-Place `NGROK_AUTH_TOKEN` in `.env` file and set env variables: 
+Install ollama: 
 ```
-!source .env
+!curl https://ollama.ai/install.sh | sh 
 ```
 
 Use CLI or Python based approach to setup and run Ollama on colab. 
 
 ### CLI approach 
-Give the necessary permissions to run scripts: 
+Install ngrok: 
 ```
-!chmod +x setup.sh
+!curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
+  | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
+  && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
+  | sudo tee /etc/apt/sources.list.d/ngrok.list \
+  && sudo apt update \
+  && sudo apt install ngrok 
 ```
-Install ollama and ngrok: 
+Get auth token from ngrok.com and configure it: 
 ```
-!sh setup.sh 
+ngrok config add-authtoken <auth-token>
 ```
-Start ollama and tunnel it using ngrok: 
+Upload `init.sh` file to the project. 
+
+Give the necessary permissions to run it: 
+```
+!chmod +x init.sh
+```
+Run the script which starts ollama and tunnel it using ngrok: 
 ```
 !sh init.sh 
 ```
 
 ### Python approach 
-Install ollama and required python libraries: 
+Install python libraries: 
 ```
-!sh setup-py.sh 
+!pip install aiohttp pyngrok
 ```
 Execute the code in `init.py` to start ollama and tunnel it using ngrok. 
 
